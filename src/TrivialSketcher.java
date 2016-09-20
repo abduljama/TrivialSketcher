@@ -69,24 +69,24 @@ public class TrivialSketcher extends JPanel {
     }
     @Override
     public void paint(Graphics g){
-//        int i;
-//        for(int j = 0; j < allPoints.size(); j++){
-//            i=0;
-//            for(int i1 = 1; i1 < allPoints.get(j).size(); i1++)
-//            {
-//                g.drawLine(allPoints.get(j).get(i).x, allPoints.get(j).get(i).y,
-//                        allPoints.get(j).get(i1).x, allPoints.get(j).get(i1).y);
-//                i++;
-//            }
-//
-//        }
-        Set set = hmap.entrySet();
-        Iterator iterator = set.iterator();
-        while(iterator.hasNext()) {
-            Map.Entry me = (Map.Entry)iterator.next();
-            ArrayList sketchpoints= (ArrayList) me.getValue();
-            System.out.print(sketchpoints);
+        int i;
+        for(int j = 0; j < allPoints.size(); j++){
+            i=0;
+            for(int i1 = 1; i1 < allPoints.get(j).size(); i1++)
+            {
+                g.drawLine(allPoints.get(j).get(i).x, allPoints.get(j).get(i).y,
+                        allPoints.get(j).get(i1).x, allPoints.get(j).get(i1).y);
+                i++;
+            }
+
         }
+//        Set set = hmap.entrySet();
+//        Iterator iterator = set.iterator();
+//        while(iterator.hasNext()) {
+//            Map.Entry me = (Map.Entry)iterator.next();
+//            ArrayList sketchpoints= (ArrayList) me.getValue();
+//            System.out.print(sketchpoints);
+//        }
 
 
     }
