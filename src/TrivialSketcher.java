@@ -67,6 +67,7 @@ public class TrivialSketcher extends JPanel {
                         allPoints.get(j).get(i1).x, allPoints.get(j).get(i1).y);
                 i++;
             }
+
         }
     }
     /**
