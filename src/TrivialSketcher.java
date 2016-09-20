@@ -9,7 +9,7 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.util.ArrayList;
+import java.util.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,9 +24,12 @@ public class TrivialSketcher extends JPanel {
     /**
      * Keeps track of the last point to draw the next line from.
      */
+    private ArrayList<Point> lastPoint;
     private ArrayList<ArrayList<Point>> allPoints = new ArrayList<ArrayList<Point>>();
-    public  ArrayList<Point> inner;
 
+
+   public  LinkedHashMap<Integer,ArrayList<Point> > hmap ;
+   public   Set set;
     /**
      * Constructs a panel, registering listeners for the mouse.
      */
@@ -35,9 +38,16 @@ public class TrivialSketcher extends JPanel {
         // to the location at which the mouse was pressed.
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                inner = new ArrayList<Point>();;
-                inner.add(new Point(e.getX(), e.getY()));
-                allPoints.add(inner);
+
+                lastPoint = new ArrayList<Point>();;
+                lastPoint.add(new Point(e.getX(), e.getY()));
+                allPoints.add(lastPoint);
+
+                hmap= new  LinkedHashMap<Integer,ArrayList<Point>>();
+                hmap.put(e.getX(),lastPoint);
+
+
+
 
             }
         });
@@ -48,27 +58,37 @@ public class TrivialSketcher extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 Graphics g = getGraphics();
-                int last = inner.size();
-                inner.add(new Point(e.getX(), e.getY()));
-                g.drawLine(inner.get(last - 1).x, inner.get(last -1).y,
+                int last = lastPoint.size();
+                lastPoint.add(new Point(e.getX(), e.getY()));
+                g.drawLine(lastPoint.get(last - 1).x, lastPoint.get(last -1).y,
                         e.getX(), e.getY());
                 g.dispose();
+
             }
         });
     }
     @Override
     public void paint(Graphics g){
-        int i;
-        for(int j = 0; j < allPoints.size(); j++){
-            i=0;
-            for(int i1 = 1; i1 < allPoints.get(j).size(); i1++)
-            {
-                g.drawLine(allPoints.get(j).get(i).x, allPoints.get(j).get(i).y,
-                        allPoints.get(j).get(i1).x, allPoints.get(j).get(i1).y);
-                i++;
-            }
-
+//        int i;
+//        for(int j = 0; j < allPoints.size(); j++){
+//            i=0;
+//            for(int i1 = 1; i1 < allPoints.get(j).size(); i1++)
+//            {
+//                g.drawLine(allPoints.get(j).get(i).x, allPoints.get(j).get(i).y,
+//                        allPoints.get(j).get(i1).x, allPoints.get(j).get(i1).y);
+//                i++;
+//            }
+//
+//        }
+        Set set = hmap.entrySet();
+        Iterator iterator = set.iterator();
+        while(iterator.hasNext()) {
+            Map.Entry me = (Map.Entry)iterator.next();
+            ArrayList sketchpoints= (ArrayList) me.getValue();
+            System.out.print(sketchpoints);
         }
+
+
     }
     /**
      * A tester method that embeds the panel in a frame so you can
