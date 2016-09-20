@@ -69,9 +69,9 @@ public class TrivialSketcher extends JPanel {
     }
     @Override
     public void paint(Graphics g){
-        int i;
+
         for(int j = 0; j < allPoints.size(); j++){
-            i=0;
+          int  i=0;
             for(int i1 = 1; i1 < allPoints.get(j).size(); i1++)
             {
                 g.drawLine(allPoints.get(j).get(i).x, allPoints.get(j).get(i).y,
