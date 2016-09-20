@@ -1,6 +1,7 @@
 /**
- * Created by abduljama on 9/6/16.
+ * Created by abduljama on 9/17/16.
  */
+
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -23,7 +24,8 @@ public class TrivialSketcher extends JPanel {
     /**
      * Keeps track of the last point to draw the next line from.
      */
-    private ArrayList<Point> lastPoint = new ArrayList<Point>();
+    private ArrayList<ArrayList<Point>> allPoints = new ArrayList<ArrayList<Point>>();
+    public  ArrayList<Point> inner;
 
     /**
      * Constructs a panel, registering listeners for the mouse.
@@ -33,7 +35,10 @@ public class TrivialSketcher extends JPanel {
         // to the location at which the mouse was pressed.
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                lastPoint.add(new Point(e.getX(), e.getY()));
+                inner = new ArrayList<Point>();;
+                inner.add(new Point(e.getX(), e.getY()));
+                allPoints.add(inner);
+
             }
         });
 
@@ -43,25 +48,26 @@ public class TrivialSketcher extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 Graphics g = getGraphics();
-                int last = lastPoint.size();
-                lastPoint.add(new Point(e.getX(), e.getY()));
-                g.drawLine(lastPoint.get(last-1).x, lastPoint.get(last-1).y, e.getX(), e.getY());
+                int last = inner.size();
+                inner.add(new Point(e.getX(), e.getY()));
+                g.drawLine(inner.get(last - 1).x, inner.get(last -1).y,
+                        e.getX(), e.getY());
                 g.dispose();
             }
         });
-
-
     }
     @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        int i = 0;
-        for(int j = 1 ; j < lastPoint.size(); j++){
-            g.drawLine(lastPoint.get(i+1).x, lastPoint.get(i+1).y,
-                    lastPoint.get(j+1).x, lastPoint.get(j+1).y);
-            i++;
+    public void paint(Graphics g){
+        int i;
+        for(int j = 0; j < allPoints.size(); j++){
+            i=0;
+            for(int i1 = 1; i1 < allPoints.get(j).size(); i1++)
+            {
+                g.drawLine(allPoints.get(j).get(i).x, allPoints.get(j).get(i).y,
+                        allPoints.get(j).get(i1).x, allPoints.get(j).get(i1).y);
+                i++;
+            }
         }
-
     }
     /**
      * A tester method that embeds the panel in a frame so you can
