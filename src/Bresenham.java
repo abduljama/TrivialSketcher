@@ -22,6 +22,8 @@ public class Bresenham extends Applet {
 
     int totalPoints ;
 
+     Boolean  increment , decrement;
+
 
     public  Bresenham (  int  x0 , int y0 , int xn,  int yn ){
         this.x0=x0;
@@ -34,13 +36,13 @@ public class Bresenham extends Applet {
 
 
     public void paint(Graphics g) {
-       x0= -1 ; y0= -1; xn= -6;yn= 1  ;
+       x0= 2; y0= 3; xn=9;yn= 5 ;
         g.fillOval(x0, y0, 5, 5);
         g.fillOval(xn, yn, 5, 5);
         dx = xn - x0;
         dy = yn - y0;
-        dydx1=dy-dx;
-        dydx2=dy+dx;
+      //  dydx1=dy-dx;
+       // dydx2=dy+dx;
 
 
         //  Computes total number of  points  required to  plot the line
@@ -52,16 +54,16 @@ public class Bresenham extends Applet {
         double  grad = dy/dx;
         if  ( grad > 0 ) {
             System.out.println("Gradient is positive");
-            pX= 2*dydx1;
+            pX= (2 * dy)-dx;
             System.out.println( "pX : " + pX + " X : " + x0 +" Y : " +y0 );
-            for (int k = 1; k < totalPoints; k++) {
+            for (int k = 1; k < totalPoints-1; k++) {
                 if (pX < 0) {
                     g.fillOval(x0++, y0, 5, 5);
                     pX = pX + (2 * dy);
                     System.out.println( "pX : " + pX + " X : " + x0 +" Y : " +y0 );
                 } else {
                     g.fillOval(x0++, y0++, 5, 5);
-                    pX = pX + (2 * dydx1);
+                    pX = pX + (2 * (dy-dx));
                     System.out.println( "pX : " + pX + " X : " + x0 +" Y : " +y0 );
                 }
 
@@ -70,20 +72,22 @@ public class Bresenham extends Applet {
         else {
 
             System.out.println("Gradient is negative");
-            pX= (-2)*dydx1;
+            pX= ((-2)*dy) - dx;
             System.out.println( "pX : " + pX + " X : " + x0 +" Y : " +y0 );
-            for (  int k = 1; k < totalPoints; k++){
+            for (  int k = 1; k < totalPoints+1 ; k++){
                 if (pX <0){
-                    x0++;
+                    x0=x0+1;
+
                     //plot pixel (x0++  & y0 )
                     // unable to plot -ve values  of  X and Y
                     pX= pX- (2 * dy);
                     System.out.println( "pX : " + pX + " X : " + x0 +" Y : " +y0 );
                 }else {
-                    x0++ ; y0++;
+                    x0++ ;
+                    y0=y0--;
                     //plot pixel (x0++  & y0++ )
                     // unable to plot -ve values  of  X and Y
-                    pX=pX - (2 * dydx2);
+                    pX=pX - (2 * dy+dx);
                     System.out.println( "pX : " + pX + " X : " + x0 +" Y : " +y0 );
                 }
             }
